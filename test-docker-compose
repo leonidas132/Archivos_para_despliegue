@@ -1,0 +1,22 @@
+@echo off
+echo === Probando Microservicios en Docker ===
+
+echo.
+echo 1. Verificando salud de los servicios...
+curl -H "X-API-KEY: product-service-key-123" http://localhost:8081/actuator/health
+echo.
+curl -H "X-API-KEY: inventory-service-key-456" http://localhost:8082/actuator/health
+
+echo.
+echo 2. Creando producto...
+curl -X POST "http://localhost:8081/api/productos" -H "Content-Type: application/json" -H "X-API-KEY: product-service-key-123" -d "{\"nombre\": \"Laptop Windows\", \"precio\": 999.99}"
+
+echo.
+echo 3. Consultando productos...
+curl -H "X-API-KEY: product-service-key-123" "http://localhost:8081/api/productos"
+
+echo.
+echo === Prueba completada ===
+echo Product Service: http://localhost:8081/api/productos
+echo Inventory Service: http://localhost:8082/api/inventarios
+pause
